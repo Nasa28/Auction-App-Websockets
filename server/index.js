@@ -24,11 +24,6 @@ socketIO.on('connection', async (socket) => {
     console.log('🔥: A user disconnected');
   });
 
-  socket.on('addProduct', async (data) => {
-    await addProduct(data);
-    socket.broadcast.emit('addProductResponse', data);
-  });
-
   socket.on('bidProduct', async (data) => {
     await Promise.all([bidProduct(data), startBid(data.id)]);
     const product = await Product.findByPk(data.id);
@@ -55,4 +50,3 @@ sequelize
     console.error('Unable to connect to the database:', error);
   });
 
-module.exports = { socketIO };
