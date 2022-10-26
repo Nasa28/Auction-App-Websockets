@@ -9,7 +9,7 @@ const PORT = 5000;
 require('./jobs');
 const Product = require('./models/product.model');
 const { startBid } = require('./startBid');
-const { bidProduct, addProduct } = require('./controller/product.controller');
+const { bidProduct} = require('./controller/product.controller');
 const socketIO = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
