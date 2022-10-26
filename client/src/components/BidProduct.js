@@ -1,0 +1,59 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+const BidProduct = ({ socket, id, current_price, buttonprice }) => {
+  const [amount, setAmount] = useState(current_price);
+  const navigate = useNavigate();
+  const [error, setError] = useState(false);
+  const [inputD, setInputD] = useState(true);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (amount > Number(current_price)) {
+      socket.emit('bidProduct', {
+        amount,
+        id,
+        last_bidder: localStorage.getItem('userName'),
+      });
+      navigate('/auction');
+    } else {
+      setError(true);
+    }
+  };
+
+  useEffect(() => {
+    if (buttonprice === 'Autre') {
+      setInputD(!inputD);
+    }
+    if (buttonprice !== undefined && buttonprice !== 'Autre') {
+      setAmount(Number(buttonprice) + Number(current_price));
+    }
+  }, [buttonprice]);
+
+  return (
+    <div>
+      <div>
+        <form className="form" onSubmit={handleSubmit}>
+          {error && (
+            <p style={{ color: 'red' }}>
+              The bidding amount must be greater than {current_price}
+            </p>
+          )}
+          {!inputD ? (
+            <>
+              <input
+                type="number"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+              />
+              <button className="bidProduct__cta">SEND</button>
+            </>
+          ) : null}
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default BidProduct;

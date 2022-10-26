@@ -1,0 +1,83 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+} */
+body {
+  margin: 0;
+  background-color: rgb(50, 50, 52);
+}
+
+.main{
+  margin: 0 400px ;
+}
+
+.live{
+  background-color: rgb(247, 58, 22);
+  border-radius: 15px;
+  width: 50px;
+}
+
+.live p{
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 2px;
+}
+
+.bidding-buttons{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 250px;
+}
+
+.bidding-buttons button, .counter button{
+  color: #ffffff;
+  background-color: rgb(22, 22, 24);
+  padding: 10px 40px ;
+  border-radius: 50px;
+  border: none;
+}
+
+.item-box{
+  background-color: rgb(32, 32, 34);
+  margin-top: 20px;
+  height: 200px;
+  border-radius: 30px;
+}
+
+.item-detail ,.counter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 6%;
+
+}
+
+.item-detail button{
+  background-color: rgb(247, 58, 22);
+  color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  border-radius: 50px;
+  border: none;
+}
+
+.item-detail p, .counter{
+  color: rgb(255, 255, 255);
+}
+
+.form {
+  margin-top: 20%;
+}
+
+.form input, .form button {
+  padding: 10px 10px;
+  border-radius: 50px;
+  color: #ffffff;
+  border: none;
+  background-color: rgb(22, 22, 24);
+}
+
+.form input{
+  width: 80%;
+}

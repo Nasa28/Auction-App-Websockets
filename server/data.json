@@ -1,0 +1,38 @@
+{
+  "products": [
+    {
+      "name": "Audi 250",
+      "price": "500000",
+      "owner": "admiralty20",
+      "last_bidder": "samson35"
+    },
+    {
+      "name": "Lamborghini S50",
+      "price": "200000",
+      "owner": "susaske40",
+      "last_bidder": "geraldt01"
+    },
+    {
+      "name": "Ferrari F560",
+      "price": "1500000",
+      "owner": "samson35",
+      "last_bidder": "chinasa"
+    },
+    {
+      "name": "Books",
+      "price": "30002",
+      "owner": "chinasa",
+      "last_bidder": "chinasa"
+    },
+    {
+      "name": "Fish",
+      "price": "100",
+      "owner": "chinasa"
+    },
+    {
+      "name": "Chinasa",
+      "price": "3",
+      "owner": "chinasa"
+    }
+  ]
+}
