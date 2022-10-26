@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import BidProduct from './BidProduct';
 import CountDown from './CountDown';
+import axios from 'axios';
 const Item = ({ socket }) => {
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [buttonprice, setButtonprice] = useState(undefined);
-  useEffect(() => {
-    socket.on('items', (products) => {
-      setProducts(products);
+  const fetchItems = async () => {
+    try {
+      const results = await axios.get('http://localhost:5000/api');
       setLoading(false);
-    });
-  }, [socket]);
+      console.log(results);
+      setProducts(results.data.products);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
   return (
     <div className="div">
       <div className="bidding-buttons">

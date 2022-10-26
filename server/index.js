@@ -19,8 +19,6 @@ const socketIO = require('socket.io')(server, {
 app.use(cors());
 
 socketIO.on('connection', async (socket) => {
-  const products = await Product.findAll({ where: { active: true } });
-  socket.emit('items', products);
   console.log(`⚡: ${socket.id} user just connected!`);
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
@@ -32,8 +30,7 @@ socketIO.on('connection', async (socket) => {
   });
 
   socket.on('bidProduct', async (data) => {
-    await bidProduct(data);
-    await startBid(data.id);
+    await Promise.all([bidProduct(data), startBid(data.id)]);
     const product = await Product.findByPk(data.id);
     const count = product.count_down;
     socket.broadcast.emit('bidProductResponse', data);
@@ -57,3 +54,5 @@ sequelize
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
+
+module.exports = { socketIO };
