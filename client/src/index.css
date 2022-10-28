@@ -1,19 +1,26 @@
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-} */
 body {
   margin: 0;
   background-color: rgb(50, 50, 52);
 }
 
-.main{
-  margin: 0 400px ;
+.main {
+  margin: 0 12%;
 }
 
-.home_form , .addItem__form{
+@media only screen and (min-width: 768px) {
+.main {
+    margin: 0 150px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+.main {
+    margin: 0 300px;
+  }
+}
+
+.home_form,
+.addItem__form {
   width: 100%;
   height: 80vh;
   padding: 20px;
@@ -22,6 +29,7 @@ body {
   justify-content: center;
   flex-direction: column;
 }
+
 .home__input,
 .addItem__form input,
 .bidItem__form input {
@@ -44,40 +52,42 @@ body {
   background-color: rgb(67, 94, 143);
 }
 
-.live{
+.live {
   background-color: rgb(247, 58, 22);
   border-radius: 15px;
   width: 50px;
 }
 
-.live p{
+.live p {
   color: rgb(255, 255, 255);
   text-align: center;
   padding: 2px;
 }
 
-.bidding-buttons{
+.bidding-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 100px;
 }
 
-.bidding-buttons button, .counter button{
+.bidding-buttons button,
+.counter button {
   color: #ffffff;
   background-color: rgb(22, 22, 24);
-  padding: 10px 40px ;
+  padding: 10px 40px;
   border-radius: 50px;
   border: none;
 }
 
-.item-box{
+.item-box {
   background-color: rgb(32, 32, 34);
   margin-top: 20px;
   height: 200px;
   border-radius: 30px;
 }
 
-.item-detail ,.counter{
+.item-detail,
+.counter {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -85,7 +95,7 @@ body {
 
 }
 
-.item-detail button{
+.item-detail button {
   background-color: rgb(247, 58, 22);
   color: rgb(255, 255, 255);
   padding: 5px 10px;
@@ -93,7 +103,8 @@ body {
   border: none;
 }
 
-.item-detail p, .counter{
+.item-detail p,
+.counter {
   color: rgb(255, 255, 255);
 }
 
@@ -101,7 +112,8 @@ body {
   margin-top: 20%;
 }
 
-.form input, .form button {
+.form input,
+.form button {
   padding: 10px 10px;
   border-radius: 50px;
   color: #ffffff;
@@ -109,10 +121,11 @@ body {
   background-color: rgb(22, 22, 24);
 }
 
-.form input{
+.form input {
   width: 80%;
 }
-.links{
+
+.links {
   color: #fff;
   font: bold 11px Arial;
   text-decoration: none;
