@@ -8,14 +8,12 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
 
-    owner: {
-      type: DataTypes.STRING,
-    },
     count_down: {
       type: DataTypes.INTEGER,
       defaultValue: null,
@@ -35,17 +33,14 @@ const Product = sequelize.define(
       defaultValue: true,
     },
 
+    won: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+
     expires_at: {
       type: DataTypes.DATE,
       defaultValue: null,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: new Date(),
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: new Date(),
     },
   },
   {

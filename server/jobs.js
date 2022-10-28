@@ -1,7 +1,3 @@
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-
 const {
   ToadScheduler,
   SimpleIntervalJob,
@@ -12,15 +8,28 @@ const scheduler = new ToadScheduler();
 const task1 = new AsyncTask(
   'simple task',
   async () => {
+    const current_time = new Date();
+
     const product = await Product.findOne({ where: { active: true } });
     if (!product || product.count_down === null) {
       return;
     }
 
-    if (product.count_down > 0) {
-      product.count_down -= 1;
-      await product.save();
-    } else if (product.count_down === 0) {
+    if (product.expires_at) {
+      const remaining_time = Math.floor(
+        (product.expires_at.getTime() - current_time.getTime()) / 1000,
+      );
+      if (remaining_time === 15) {
+        product.count_down = remaining_time;
+        await product.save();
+      }
+      if (remaining_time < 15) {
+        product.count_down -= 1;
+        await product.save();
+      }
+    }
+
+    if (product.count_down === 0) {
       await product.update({ active: false });
     }
     return await product.save();
@@ -35,23 +44,20 @@ scheduler.addSimpleIntervalJob(job1);
 const task2 = new AsyncTask(
   'simple task',
   async () => {
-    const product = await Product.findOne({ where: { active: true } });
+    const product = await Product.findOne({ where: { active: false } });
     if (!product) {
-      const data = {
-        name: 'Toyota camry',
-        description: 'Super sleek',
-        owner: 'Admin',
-        current_price: 10,
-      };
-      await Product.create(data);
+      return;
     }
+    await product.destroy();
   },
   (err) => {
     console.log(err);
   },
 );
-const job2 = new SimpleIntervalJob({ minutes: 1, runImmediately: true }, task2);
+const job2 = new SimpleIntervalJob(
+  { seconds: 90, runImmediately: true },
+  task2,
+);
 
 scheduler.addSimpleIntervalJob(job2);
 
-// scheduler.stop();

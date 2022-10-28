@@ -9,7 +9,7 @@ const PORT = 5000;
 require('./jobs');
 const Product = require('./models/product.model');
 const { startBid } = require('./startBid');
-const { bidProduct} = require('./controller/product.controller');
+const { bidProduct, addProduct } = require('./controller/product.controller');
 const socketIO = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
@@ -20,6 +20,7 @@ app.use(cors());
 
 socketIO.on('connection', async (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
+
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
   });
@@ -31,6 +32,23 @@ socketIO.on('connection', async (socket) => {
     socket.broadcast.emit('bidProductResponse', data);
     socket.emit('counter', count);
   });
+
+  socket.on('addProduct', async (data) => {
+    await addProduct(data);
+    socket.broadcast.emit('addProductResponse', data);
+  });
+
+  setInterval(function () {
+    Product.findOne({ where: { active: false } }).then((product) => {
+      if (!product) {
+        return;
+      }
+      socket.emit(
+        'winner',
+        `${product.last_bidder} won the last Auction @${product.current_price}`,
+      );
+    });
+  }, 1000);
 });
 
 app.get('/api', async (req, res) => {
@@ -49,4 +67,3 @@ sequelize
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
-

@@ -24,4 +24,13 @@ const bidProduct = async (data) => {
   }
 };
 
-module.exports = { bidProduct };
+const addProduct = async (data) => {
+  const product = await Product.findOne({ where: { active: true } });
+
+  if (product) {
+    return 'Cannot create a product at this moment';
+  }
+  await Product.create(data);
+};
+
+module.exports = { bidProduct, addProduct };

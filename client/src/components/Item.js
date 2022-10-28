@@ -3,14 +3,17 @@ import BidProduct from './BidProduct';
 import CountDown from './CountDown';
 import axios from 'axios';
 const Item = ({ socket }) => {
+  const message = 'Click on Add Item to create an auction';
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [buttonprice, setButtonprice] = useState(undefined);
+  if (!products) {
+    socket.emit('noItem', { message });
+  }
   const fetchItems = async () => {
     try {
       const results = await axios.get('http://localhost:5000/api');
       setLoading(false);
-      console.log(results);
       setProducts(results.data.products);
     } catch (error) {
       setLoading(false);
@@ -40,7 +43,7 @@ const Item = ({ socket }) => {
             <p>Loading</p>
           </div>
         ) : (
-          products.map((product) => (
+         products.map((product) => (
             <div key={product.id}>
               <div>
                 <div className="item-detail">
@@ -62,7 +65,7 @@ const Item = ({ socket }) => {
                 buttonprice={buttonprice}
               />
             </div>
-          ))
+         ))
         )}
       </div>
     </div>
