@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-const BidProduct = ({ socket, id, current_price, buttonprice }) => {
+const BidItem = ({ socket, id, current_price, buttonprice }) => {
   const [amount, setAmount] = useState(current_price);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
@@ -9,7 +9,7 @@ const BidProduct = ({ socket, id, current_price, buttonprice }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (amount > Number(current_price)) {
-      socket.emit('bidProduct', {
+      socket.emit('bidItem', {
         amount,
         id,
         last_bidder: localStorage.getItem('userName'),
@@ -47,7 +47,7 @@ const BidProduct = ({ socket, id, current_price, buttonprice }) => {
                 onChange={(e) => setAmount(e.target.value)}
                 required
               />
-              <button className="bidProduct__cta">SEND</button>
+              <button className="bidItem__cta">SEND</button>
             </>
           ) : null}
         </form>
@@ -56,4 +56,4 @@ const BidProduct = ({ socket, id, current_price, buttonprice }) => {
   );
 };
 
-export default BidProduct;
+export default BidItem;

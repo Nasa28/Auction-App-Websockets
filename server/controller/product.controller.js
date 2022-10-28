@@ -1,6 +1,6 @@
 const Product = require('../models/product.model');
 
-const bidProduct = async (data) => {
+const bidItem = async (data) => {
   const { amount, last_bidder, id } = data;
   const current_time = new Date();
   try {
@@ -24,7 +24,7 @@ const bidProduct = async (data) => {
   }
 };
 
-const addProduct = async (data) => {
+const addItem = async (data) => {
   const product = await Product.findOne({ where: { active: true } });
 
   if (product) {
@@ -33,4 +33,4 @@ const addProduct = async (data) => {
   await Product.create(data);
 };
 
-module.exports = { bidProduct, addProduct };
+module.exports = { bidItem, addItem };

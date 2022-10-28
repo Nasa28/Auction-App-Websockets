@@ -9,7 +9,6 @@ const Auction = ({ socket }) => {
       setWinner(data);
     });
   }, [socket]);
-
   return (
     <div>
       <div className="nav">

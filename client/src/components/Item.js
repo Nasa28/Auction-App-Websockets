@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import BidProduct from './BidProduct';
+import BidItem from './BidItem';
 import CountDown from './CountDown';
 import axios from 'axios';
 const Item = ({ socket }) => {
@@ -7,9 +7,7 @@ const Item = ({ socket }) => {
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [buttonprice, setButtonprice] = useState(undefined);
-  if (!products) {
-    socket.emit('noItem', { message });
-  }
+
   const fetchItems = async () => {
     try {
       const results = await axios.get('http://localhost:5000/api');
@@ -43,7 +41,7 @@ const Item = ({ socket }) => {
             <p>Loading</p>
           </div>
         ) : (
-         products.map((product) => (
+          products.map((product) => (
             <div key={product.id}>
               <div>
                 <div className="item-detail">
@@ -58,14 +56,14 @@ const Item = ({ socket }) => {
               </div>
 
               <CountDown socket={socket} />
-              <BidProduct
+              <BidItem
                 id={product.id}
                 current_price={product.current_price}
                 socket={socket}
                 buttonprice={buttonprice}
               />
             </div>
-         ))
+          ))
         )}
       </div>
     </div>

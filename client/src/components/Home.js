@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div>
-      <form className="home__form" onSubmit={handleSubmit}>
+      <form className="home_form" onSubmit={handleSubmit}>
         <label htmlFor="username">Enter your username</label>
         <input
           type="text"

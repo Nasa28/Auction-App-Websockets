@@ -9,7 +9,7 @@ const PORT = 5000;
 require('./jobs');
 const Product = require('./models/product.model');
 const { startBid } = require('./startBid');
-const { bidProduct, addProduct } = require('./controller/product.controller');
+const { bidItem, addItem } = require('./controller/product.controller');
 const socketIO = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
@@ -25,17 +25,17 @@ socketIO.on('connection', async (socket) => {
     console.log('🔥: A user disconnected');
   });
 
-  socket.on('bidProduct', async (data) => {
-    await Promise.all([bidProduct(data), startBid(data.id)]);
+  socket.on('bidItem', async (data) => {
+    await Promise.all([bidItem(data), startBid(data.id)]);
     const product = await Product.findByPk(data.id);
     const count = product.count_down;
-    socket.broadcast.emit('bidProductResponse', data);
+    socket.broadcast.emit('bidItemResponse', data);
     socket.emit('counter', count);
   });
 
-  socket.on('addProduct', async (data) => {
-    await addProduct(data);
-    socket.broadcast.emit('addProductResponse', data);
+  socket.on('addItem', async (data) => {
+    await addItem(data);
+    socket.broadcast.emit('addItemResponse', data);
   });
 
   setInterval(function () {

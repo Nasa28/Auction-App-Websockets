@@ -9,7 +9,7 @@ const AddItem = ({ socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit('addProduct', {
+    socket.emit('addItem', {
       name,
       description,
       current_price,
@@ -19,9 +19,9 @@ const AddItem = ({ socket }) => {
 
   return (
     <div>
-      <div className="addproduct__container">
+      <div className="addItem__container">
         <h2>Add a new product</h2>
-        <form className="addProduct__form" onSubmit={handleSubmit}>
+        <form className="addItem__form" onSubmit={handleSubmit}>
           <label htmlFor="name">Name of the Item</label>
           <input
             type="text"
@@ -49,7 +49,7 @@ const AddItem = ({ socket }) => {
             required
           />
 
-          <button className="addProduct__cta">SEND</button>
+          <button className="addItem__cta">SEND</button>
         </form>
       </div>
     </div>
