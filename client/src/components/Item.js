@@ -3,7 +3,6 @@ import BidItem from './BidItem';
 import CountDown from './CountDown';
 import axios from 'axios';
 const Item = ({ socket }) => {
-  const message = 'Click on Add Item to create an auction';
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [buttonprice, setButtonprice] = useState(undefined);

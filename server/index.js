@@ -39,7 +39,7 @@ socketIO.on('connection', async (socket) => {
   });
 
   setInterval(function () {
-    Product.findOne({ where: { active: false } }).then((product) => {
+    Product.findOne({ where: { won: true } }).then((product) => {
       if (!product) {
         return;
       }
@@ -52,7 +52,7 @@ socketIO.on('connection', async (socket) => {
 });
 
 app.get('/api', async (req, res) => {
-  const products = await Product.findAll({ where: { active: true } });
+  const products = await Product.findAll();
   res.status(200).json({ products });
 });
 

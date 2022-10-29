@@ -8,29 +8,18 @@ const scheduler = new ToadScheduler();
 const task1 = new AsyncTask(
   'simple task',
   async () => {
-    const current_time = new Date();
-
     const product = await Product.findOne({ where: { active: true } });
     if (!product || product.count_down === null) {
       return;
     }
 
-    if (product.expires_at) {
-      const remaining_time = Math.floor(
-        (product.expires_at.getTime() - current_time.getTime()) / 1000,
-      );
-      if (remaining_time === 15) {
-        product.count_down = remaining_time;
-        await product.save();
-      }
-      if (remaining_time < 15) {
-        product.count_down -= 1;
-        await product.save();
-      }
+    if (product.count_down) {
+      product.count_down -= 1;
     }
 
+
     if (product.count_down === 0) {
-      await product.update({ active: false });
+      await product.update({ active: false, won: true });
     }
     return await product.save();
   },
@@ -60,4 +49,3 @@ const job2 = new SimpleIntervalJob(
 );
 
 scheduler.addSimpleIntervalJob(job2);
-

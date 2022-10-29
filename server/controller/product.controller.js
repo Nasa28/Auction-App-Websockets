@@ -6,10 +6,12 @@ const bidItem = async (data) => {
   try {
     const product = await Product.findByPk(id);
     if (product.expires_at) {
-      const remaining_time =
-        (current_time.getTime() - product.expires_at.getTime()) / 1000;
+      const remaining_time = Math.floor(
+        (product.expires_at.getTime() - current_time.getTime()) / 1000,
+      );
       if (remaining_time < 15) {
         product.count_down = 15;
+        await product.save();
       }
     }
 
@@ -22,6 +24,7 @@ const bidItem = async (data) => {
   } catch (err) {
     console.log(err);
   }
+  
 };
 
 const addItem = async (data) => {

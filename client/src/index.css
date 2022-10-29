@@ -8,13 +8,13 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
-.main {
+  .main {
     margin: 0 150px;
   }
 }
 
 @media only screen and (min-width: 992px) {
-.main {
+  .main {
     margin: 0 300px;
   }
 }
