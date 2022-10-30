@@ -9,7 +9,9 @@ const Item = ({ socket }) => {
 
   const fetchItems = async () => {
     try {
-      const results = await axios.get('http://localhost:5000/api');
+      const results = await axios.get(
+        'https://voggt-auction-app.herokuapp.com/api',
+      );
       setLoading(false);
       setProducts(results.data.products);
     } catch (error) {

@@ -4,19 +4,18 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const server = require('http').Server(app);
-const PORT = 5000;
+const port = process.env.PORT || 3000;
 
 require('./jobs');
 const Product = require('./models/product.model');
 const { startBid } = require('./startBid');
 const { bidItem, addItem } = require('./controller/product.controller');
+app.use(cors());
 const socketIO = require('socket.io')(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: '*',
   },
 });
-
-app.use(cors());
 
 socketIO.on('connection', async (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
@@ -59,8 +58,8 @@ app.get('/api', async (req, res) => {
 sequelize
   .sync()
   .then(() => {
-    server.listen(PORT, () => {
-      console.log(`Server listening on ${PORT}`);
+    server.listen(port, '0.0.0.0', () => {
+      console.log(`Server listening on ${port}`);
     });
     console.log('Connection has been established successfully.');
   })
