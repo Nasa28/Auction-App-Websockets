@@ -3,7 +3,7 @@ import Auction from './components/Auction';
 import { Route, Routes } from 'react-router-dom';
 import socketIO from 'socket.io-client';
 
-const socket = socketIO.connect('http://localhost:5000');
+const socket = socketIO.connect('https://voggt-auction-app.herokuapp.com/');
 function App() {
   return (
     <div className="main">
