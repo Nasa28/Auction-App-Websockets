@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-const BidItem = ({ socket, id, current_price, buttonprice }) => {
+const BidItem = ({ socket, id, current_price, buttonprice, name }) => {
   const [amount, setAmount] = useState(current_price);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
@@ -11,6 +11,8 @@ const BidItem = ({ socket, id, current_price, buttonprice }) => {
     if (amount > Number(current_price)) {
       socket.emit('bidItem', {
         amount,
+        name,
+        current_price,
         id,
         last_bidder: localStorage.getItem('userName'),
       });

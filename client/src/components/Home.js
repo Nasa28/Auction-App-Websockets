@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({ socket }) => {
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem('userName', userName);
+    socket.emit('new-user', { userName });
     navigate('/auction');
   };
 

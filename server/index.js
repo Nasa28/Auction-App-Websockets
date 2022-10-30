@@ -4,12 +4,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const server = require('http').Server(app);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 require('./jobs');
 const Product = require('./models/product.model');
 const { startBid } = require('./startBid');
-const { bidItem, addItem } = require('./controller/product.controller');
+const { bidItem } = require('./controller/product.controller');
 app.use(cors());
 const socketIO = require('socket.io')(server, {
   cors: {
@@ -32,29 +32,25 @@ socketIO.on('connection', async (socket) => {
     socket.emit('counter', count);
   });
 
-  socket.on('addItem', async (data) => {
-    await addItem(data);
-    socket.broadcast.emit('addItemResponse', data);
+  socket.on('new-user', (data) => {
+    socket.broadcast.emit('joinUserResponse', data);
   });
 
   setInterval(function () {
-    Product.findOne({ where: { won: true } }).then((product) => {
-      if (!product) {
+    Product.findAll().then((item) => {
+      if (item.length === 0) {
         return;
       }
-      socket.emit(
-        'winner',
-        `${product.last_bidder} won the last Auction @${product.current_price}`,
-      );
+      if (item[0].won) {
+        socket.emit(
+          'winner',
+          `${item[0].last_bidder} won the last Auction @${item[0].current_price}`,
+        );
+      }
+      socket.broadcast.emit('all-items', item);
     });
   }, 1000);
 });
-
-app.get('/api', async (req, res) => {
-  const products = await Product.findAll();
-  res.status(200).json({ products });
-});
-
 sequelize
   .sync()
   .then(() => {

@@ -1,48 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import BidItem from './BidItem';
 import CountDown from './CountDown';
-import axios from 'axios';
 const Item = ({ socket }) => {
-  const [products, setProducts] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState([]);
   const [buttonprice, setButtonprice] = useState(undefined);
 
-  const fetchItems = async () => {
-    try {
-      const results = await axios.get(
-        'https://voggt-auction-app.herokuapp.com/api',
-      );
-      setLoading(false);
-      setProducts(results.data.products);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    fetchItems();
-  }, []);
-
+    socket.on('all-items', (data) => {
+      setItems(data);
+    });
+  }, [socket]);
   return (
     <div className="div">
       <div className="bidding-buttons">
         <div>
-          <button onClick={() => setButtonprice(14)}>14€</button>
+          <button onClick={() => setButtonprice(14)}>+14€</button>
         </div>
         <div>
-          <button onClick={() => setButtonprice(16)}>16€</button>
+          <button onClick={() => setButtonprice(16)}>+16€</button>
         </div>
         <div>
           <button onClick={() => setButtonprice('Autre')}>Autre</button>
         </div>
       </div>
       <div className="item-box">
-        {loading ? (
+        {items.length === 0 ? (
           <div>
-            <p>Loading</p>
+            <p style={{ color: 'blue' }}>Wait for auction to start</p>
           </div>
         ) : (
-          products.map((product) => (
+          items.map((product) => (
             <div key={product.id}>
               <div>
                 <div className="item-detail">
@@ -60,6 +47,7 @@ const Item = ({ socket }) => {
               <BidItem
                 id={product.id}
                 current_price={product.current_price}
+                name={product.name}
                 socket={socket}
                 buttonprice={buttonprice}
               />

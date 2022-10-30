@@ -17,7 +17,6 @@ const task1 = new AsyncTask(
       product.count_down -= 1;
     }
 
-
     if (product.count_down === 0) {
       await product.update({ active: false, won: true });
     }
@@ -33,18 +32,32 @@ scheduler.addSimpleIntervalJob(job1);
 const task2 = new AsyncTask(
   'simple task',
   async () => {
-    const product = await Product.findOne({ where: { active: false } });
-    if (!product) {
+    const item = await Product.findOne({ where: { won: true } });
+    const product = await Product.findAll();
+    if (product.length === 0) {
+      await Product.create({
+        name: 'Toyota Camry',
+        description: 'This is an awesome ride',
+        current_price: 1,
+      });
+    }
+    if (item) {
+      await item.destroy();
+      await Product.create({
+        name: 'Toyota Camry',
+        description: 'This is an awesome ride',
+        current_price: 1,
+      });
+    } else {
       return;
     }
-    await product.destroy();
   },
   (err) => {
     console.log(err);
   },
 );
 const job2 = new SimpleIntervalJob(
-  { seconds: 90, runImmediately: true },
+  { seconds: 55, runImmediately: true },
   task2,
 );
 
