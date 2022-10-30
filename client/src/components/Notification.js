@@ -29,9 +29,9 @@ const Notification = ({ socket }) => {
   return (
     <div>
       <div>
+        <p style={{ color: 'red' }}>{winner}</p>
         <p style={{ color: 'red' }}>{notification}</p>
         <p style={{ color: 'red' }}>{join}</p>
-        <p style={{ color: 'red' }}>{winner}</p>
       </div>
     </div>
   );

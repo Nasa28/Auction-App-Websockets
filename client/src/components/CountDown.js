@@ -6,10 +6,7 @@ const CountDown = ({ socket }) => {
     socket.on('counter', (count) => {
       setSeconds(count);
     });
-    if (seconds > 0) {
-      setTimeout(() => setSeconds(seconds - 1), 1000);
-    }
-  }, [seconds, socket]);
+  }, [socket]);
   return (
     <div className="counter">
       <button>{seconds}</button>

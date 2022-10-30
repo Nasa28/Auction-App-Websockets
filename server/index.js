@@ -27,9 +27,7 @@ socketIO.on('connection', async (socket) => {
   socket.on('bidItem', async (data) => {
     await Promise.all([bidItem(data), startBid(data.id)]);
     const product = await Product.findByPk(data.id);
-    const count = product.count_down;
     socket.broadcast.emit('bidItemResponse', data);
-    socket.emit('counter', count);
   });
 
   socket.on('new-user', (data) => {
@@ -41,6 +39,11 @@ socketIO.on('connection', async (socket) => {
       if (item.length === 0) {
         return;
       }
+      if (item[0].count_down) {
+        const count = item[0].count_down;
+        socket.emit('counter', count);
+      }
+
       if (item[0].won) {
         socket.emit(
           'winner',
